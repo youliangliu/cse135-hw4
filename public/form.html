@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Youliang Liu's Form page</title>
+        <link rel="stylesheet" href="css/style.css" >
+        <meta name="author" content="Youliang Liu">
+        <script src="js/reporter.js"></script>
+        <script src="js/tracker.js"></script>
+    </head>
+
+    <body>
+        <div id = "form_div">
+            <h1>Submit your answers!</h1>
+            <nav>
+                <a href="/index.html">Homepage</a> |
+                <a href="/images.html">Images</a> |
+                <a href="/form.html">Form</a> |
+                <a href="/table_and_lists.html">Table and Lists</a> |
+                <a href="/externals.html">Externals</a> |
+                <a href="/Reportertest.html">Reportertest</a>
+              </nav>
+              <br />
+              <form action = "http://httpbin.org/post" method = "POST">
+              <label for="Major-choice">What is your major:</label>
+              <input list="Major choice" id="Major-choice" name="Major choice" />
+              
+              <datalist id="Major choice">
+                  <option value="Computer Science">
+                  <option value="Computer Engineering">
+                  <option value="Math CS">
+                  <option value="Literature">
+                  <option value="Visual Art">
+              </datalist>
+              <br />
+              <br />
+              
+                <fieldset>
+                  <legend>Choose your favorite CSE course</legend>
+              
+                  <input type="radio" id="cse135" name="course">
+                  <label for="cse135">cse135</label><br/>
+              
+                  <input type="radio" id="cse100" name="course">
+                  <label for="cse100">cse100</label><br/>
+              
+                  <input type="radio" id="cse110" name="course">
+                  <label for="cse110">cse110</label>
+                </fieldset>
+              
+              <br />
+              <br />
+              <label for="feeling">How I'm feeling today:</label>
+
+                <meter id="feeling"
+                min="0" max="100"
+                low="33" high="66" optimum="80"
+                value="5">
+                at 5/100
+                </meter>
+              <br /><br /><br />
+              <label for="holiday-select">Do you want more holiday:</label>
+              <select id="holiday-select">
+                <optgroup label="Smart">
+                    <option>Yes</option>
+                    <option>Yesss</option>
+                    <option>Yesssssss</option>
+                </optgroup>
+                <optgroup label="Really?">
+                    <option>No</option>
+                    <option>Nah</option>
+                    <option>Nay</option>
+                </optgroup>
+              </select>
+              <br /><br /><br />
+             
+              <br /><br />
+              <label for="file">You are doing great progress:</label>
+              <progress id="file" max="100" value="90"> 90% </progress>
+              <br /><br /><br />
+              <textarea name="textarea"
+                rows="5" cols="30"
+                disabled>Tell me more about you!</textarea>
+              <textarea name="textarea"
+                rows="5" cols="30"
+                readonly>Thank you for visiting my website!</textarea>
+              <textarea name="textarea"
+                rows="5" cols="30" minlength="10" maxlength="200" autofocus="true"
+                autocomplete="on"
+                placeholder="Tell me how you feel about this website."></textarea>
+                <br /><br />
+              <button type="submit" name="button">Submit</button>
+              </form>
+              <fieldset>
+                <legend>Do a little calculation please!</legend>
+            
+              <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+                <input type="range" id="b" name="b" value="50" /> +
+                <input type="number" id="a" name="a" value="10" /> =
+                <output name="result" for="a b">60</output>
+              </form>
+              
+              </fieldset>
+        </div>
+    </body>
+</html>

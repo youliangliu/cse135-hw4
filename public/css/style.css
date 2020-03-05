@@ -1,0 +1,228 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 60px;
+    font-family: Sans-Serif;
+    color: rgb(16, 78, 97);
+    text-align: center;
+    margin-top: 0;
+  }
+
+h2 {
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(6, 250, 107);
+    text-align: left;
+    margin-top: 0.3em;
+    margin-bottom: 0.33em;
+    margin-left: 0.5em;
+    margin-right: 0;
+  }
+
+h3 {
+    font-size: 30px;
+    text-align: left;
+    font-family: cursive;
+    color: rgb(16, 78, 97);
+  }  
+
+header{
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(6, 250, 107);
+    text-align: left;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    margin-left: 0.5em;
+    margin-right: 0;
+  } 
+
+p, i{
+    list-style-type:none;
+    font-size: 25px;
+    line-height: 1;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1px;
+    text-align: left;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 0.5em;
+    margin-right: 0;
+  }
+
+section {
+    display: block;
+  }
+
+button {
+    font-size: 25px;
+    color: white;
+    border: none;
+    border-radius:3em;
+    background-color:red;
+    padding: 8px 15px;
+  }
+
+#top_div{
+    display:inline-block;
+    background-color: white;
+    height: 22%;
+    width: 100%;
+    margin: 0;
+}
+
+#overflow_div{
+  height: 200px;
+  overflow: scroll;
+}
+
+#main_div{
+    display:inline-block;
+    background-image: url(/img/Beijing_01.jpg);
+    background-size: cover;
+    background-repeat: repeat-y;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}  
+
+#report_div{
+  height: 700%;
+  width: 100%;
+}
+
+#bottom_div{
+    text-align: center;
+    display:inline-block;
+    background-color: gray;
+    height: 35%;
+    width: 100%;
+    margin: 0;
+}
+
+#images_div{
+  background-color: black;
+    height: 700%;
+    width: 100%;
+    margin: 0;
+}
+
+#form_div{
+  background-color: white;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#table_div{
+  background-color: white;
+    height: 150%;
+    width: 100%;
+    margin: 0;
+}
+
+#externals_div{
+  background-color: white;
+    height: 400%;
+    width: 100%;
+    margin: 0;
+}
+
+footer {
+  display: block;
+}
+ 
+address {
+  display: block;
+  text-align: center;
+  font-style: italic;
+}
+
+form {
+  display: block;
+  margin-top: 0em;
+  margin-left: 0.5em;
+}
+
+em {
+  font-size: 40px;
+}
+
+code {
+  font-family: monospace;
+  font-size: 30px;
+}
+
+pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+}
+
+img {
+  display: inline-block;
+  margin-left: 0.5em;
+}
+
+legend {
+  background-color: #000;
+  color: #fff;
+  padding: 3px 6px;
+  margin-top: 2em;
+}
+
+.output {
+  font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+  margin: .4rem;
+}
+
+label {
+  font-family: "Fira Sans", sans-serif;
+  padding-right: 10px;
+  font-size: 1rem;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th, tr {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+thead{
+  color: green;
+  background-color: hotpink;
+}
+
+#lunch{
+  background-color: hotpink;
+}
+
+
+/*
+li{
+  list-style-type:none;
+  font-size: 25px;
+  line-height: 1;
+  color: black;
+  letter-spacing: 1px;
+  text-align: left;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  margin-left: 0.5em;
+  margin-right: 0;
+}
+*/
