@@ -85,6 +85,8 @@ exports.returnListOfAdmins = functions.https.onRequest((req, res) => {
       .then(snapshot => {
         snapshot.forEach(doc => {
           console.log(doc.id, '=>', doc.data());
+          var admins = new listOfAdmins();
+          admins.array.push(doc.data);
         });
       })
       .catch(err => {
@@ -103,6 +105,10 @@ function makeid(length) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+ }
+
+ function listOfAdmins() {
+    this.array = []; 
  }
 
 
