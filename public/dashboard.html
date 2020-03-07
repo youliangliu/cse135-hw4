@@ -2,8 +2,11 @@
 <head>
     <title>Dashboard</title>
     <meta name="author" content="Youliang Liu">
+    <script src="/jquery/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
+    <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
 </head>
 <body>
     <nav>
@@ -11,4 +14,42 @@
         <a href="/reports/browsers.html">Browser Data</a> |
         <a href="./logout.html">Logout</a>
     </nav>
+    <div id="grid" style="height: 450px"></div>
+    <script>
+        $('#grid').w2grid({
+    name: 'grid',
+    header: 'List of Names',
+    show: {
+        toolbar: true,
+        footer: true
+    },
+    columns: [
+        { field: 'name', caption: 'Name', size: '40%', sortable: true, resizable: true },
+        { field: 'email', caption: 'Email', size: '40%', resizable: true },
+        { field: 'verified', caption: 'Verified', size: '20%', resizable: true },
+    ],
+    searches: [
+        { field: 'name', caption: 'Name', type: 'text' },
+    ],
+    sortData: [{ field: 'name', direction: 'ASC' }],
+    records: [
+        { recid: 1, name: 'John', email: 'jdoe@gmail.com', verified: 'y' },
+    ]
+});
+    </script>
+    <script>
+        function requestAdmins(){
+            //var data = localStorage.getItem(pageName);
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnListOfAdmins';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    //When response is ready grab the id in response
+                }
+            };
+            request.send('request');
+        }
+        requestAdmins();
+    </script>
 </body>

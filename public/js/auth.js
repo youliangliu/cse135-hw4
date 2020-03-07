@@ -24,6 +24,26 @@ document.getElementById("loginButton").onclick = function() {
 };
 firebase.auth().onAuthStateChanged(user => {
   if(user) {
+    var name = user.displayName;
+    var email = user.email;
+    var verified = user.emailVerified;
+    
+    sendAdminData(name, email, verified);
     window.location = './dashboard.html'; //After successful login, user will be redirected to home.html
   }
 });
+
+function sendAdminData(name, email, verified){
+  var request = new XMLHttpRequest();
+  var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/updateAdminData';
+  request.open('POST', url, true);
+  var admin = new Admin(name, email, verified);
+  var data = JSON.stringify(admin);
+  request.send(data);
+}
+
+function Admin(name, email, verified) {
+  this.name = name;
+  this.email = email;
+  this.verified = verified;
+}

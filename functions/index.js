@@ -56,9 +56,42 @@ exports.updateData = functions.https.onRequest((req, res) => {
         id : json.id
     });
     res.send("Success");
-
-
 });
+
+exports.updateAdminData = functions.https.onRequest((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://cse135-hw4-5666d.firebaseapp.com');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Expose-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT');
+    var db = admin.firestore();
+    var data = req.body;
+    var json = JSON.parse(data);
+    var docRef = db.collection('Admins').doc(json.name);
+    docRef.set({
+        Email : json.email,
+        verified: json.verified
+    });
+    res.send("Success");
+});
+
+exports.returnListOfAdmins = functions.https.onRequest((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://cse135-hw4-5666d.firebaseapp.com');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Expose-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT');
+    var db = admin.firestore();
+    let adminRef = db.collection('Admins');
+    let allAdmins = adminRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+        });
+      })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
+})
+
 
 //A function to generate a random string id
 //source: https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript

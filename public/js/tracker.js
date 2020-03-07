@@ -61,7 +61,7 @@ function addId(){
 function sendData(){
     var request = new XMLHttpRequest();
     var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/updateData';
-    request.open('POST', url, false);
+    request.open('POST', url, true);
     addId();
     var data = localStorage.getItem(pageName);
     request.send(data);
