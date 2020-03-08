@@ -6,7 +6,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
     <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
+    <script src="/chartist/chartist.min.js"></script>
     <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
 </head>
 <body>
     <nav>
@@ -16,8 +18,12 @@
     </nav>
     <p>Browser session info:</p>
     <div id="grid" style="height: 450px"></div>
+    <p>Percentage of sessions by operating system</p>
+    <div class='ct-chart ct-perfect-fourth'></div>
     <script>
         var userArray = [];
+        var numWin = 0;
+        var numMac = 0;
         $('#grid').w2grid({
             name: 'grid',
             header: 'List of Names',
@@ -62,7 +68,42 @@
                                            cookie: userArray[i].cookie,
                                            js: userArray[i].js
                                          });
+                        var userAgent = userArray[i].userAgent;
+                        if(userAgent.search("Windows") != -1) {
+                            numWin++;
+                        }
+                        else if(userAgent.search("Macintosh") != -1) {
+                            numMac++;
+                        }
                     }
+                    var data = {
+                        labels: ['Windows', 'Mac'],
+                        series: [numWin, numMac]
+                    };
+
+                    var options = {
+                        width: 600,
+                        height: 600,
+                        labelInterpolationFnc: function(value) {
+                            return value[0]
+                        }
+                    };
+
+                    var responsiveOptions = [
+                        ['screen and (min-width: 640px)', {
+                            chartPadding: 30,
+                            labelOffset: 100,
+                            labelDirection: 'explode',
+                            labelInterpolationFnc: function(value) {
+                            return value;
+                            }
+                        }],
+                        ['screen and (min-width: 1024px)', {
+                            labelOffset: 80,
+                            chartPadding: 20
+                        }]
+                    ];
+                    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
                 }
             };
             request.send('request');
