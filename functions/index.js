@@ -53,7 +53,8 @@ exports.updateData = functions.https.onRequest((req, res) => {
         scroll : json.scroll,
         mouseMovement : json.mouseMovement,
         unloadTimes : json.unloadTimes,
-        id : json.id
+        id : json.id,
+        hour : json.hour
     });
     res.send("Success");
 });
@@ -135,7 +136,7 @@ exports.returnCollectedSpeedData = functions.https.onRequest((req, res) => {
         snapshot.forEach(doc => {
           //console.log(doc.id, '=>', doc.data());
           if(doc.data().userInfo == null) {
-            var speed = new DynamicData(doc.data().timeTaken);
+            var speed = doc.data().timeTaken;
             users.array.push(speed);
           }
         });
