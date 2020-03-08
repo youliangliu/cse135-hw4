@@ -72,6 +72,8 @@ function Entry(){
     var start = performance.timing.navigationStart;
     var end = performance.timing.responseEnd;
     var timeTakenValue = end - start;
+    var today = new Date();
+    var currentHour = today.getHours();
 
     this.userAgent = navigator.userAgent;
     this.userLanguage = navigator.language;

@@ -136,7 +136,7 @@ exports.returnCollectedSpeedData = functions.https.onRequest((req, res) => {
         snapshot.forEach(doc => {
           //console.log(doc.id, '=>', doc.data());
           if(doc.data().userInfo == null) {
-            var speed = new DynamicData(doc.data().timeTaken);
+            var speed = doc.data().timeTaken;
             users.array.push(speed);
           }
         });
