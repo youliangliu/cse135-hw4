@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <title>Page Speed History</title>
+    <meta name="author" content="Youliang Liu">
+    <script src="/jquery/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="/chartist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
+  </head>
+</head>
+<body>
+    <nav>
+        <a href="/dashboard.html">Dashboard</a> |
+        <a href="/reports/browsers.html">Browser Data</a> |
+        <a href="/logout.html">Logout</a>
+    </nav>
+    <div class="ct-chart ct-perfect-fourth"></div>
+    <script>
+        var userArray;
+        function requestSpeedData(){
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedSpeedData';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseObj = JSON.parse(this.response);
+                    userArray = responseObj.array;
+                    numOfSessions = userArray.length;
+                }
+            };
+            request.send('request');
+        }
+        requestSpeedData();
+        var data = {
+            // A labels array that can contain any sort of values
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            // Our series array that contains series objects or in this case series data arrays
+            series: [
+                [5, 2, 4, 2, 0]
+            ]
+        };
+        var options = {
+            // Disable line smoothing
+            lineSmooth: false,
+            width: 1500,
+            height: 400
+        };
+        // Create a new line chart object where as first parameter we pass in a selector
+        // that is resolving to our chart container element. The Second parameter
+        // is the actual data object.
+        new Chartist.Line('.ct-chart', data, options);
+    </script>
+</body>

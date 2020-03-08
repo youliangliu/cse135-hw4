@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Youliang Liu's Report page</title>
+        <link rel="stylesheet" href="css/style.css" >
+        <meta name="author" content="Youliang Liu">
+        <script src="js/reporter.js"></script>
+        <script src="js/tracker.js"></script>
+        
+    </head>
+
+    <body>
+        <div id = "report_div">
+            <h1>Here are the Reports!</h1>
+            <h1>After you purge you need to refresh to see the result!</h1>
+            <nav>
+                <a href="/index.html">Homepage</a> |
+                <a href="/images.html">Images</a> |
+                <a href="/form.html">Form</a> |
+                <a href="/table_and_lists.html">Table and Lists</a> |
+                <a href="/externals.html">Externals</a> |
+                <a href="/Reportertest.html">Reportertest</a>
+              </nav>
+            <details>
+                <summary>index page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).scroll);</script></td>
+                </tr>
+                <tr>
+                    <td>Unload Times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("index")).unloadTimes);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('index')">Purge this</button>
+            </details>
+
+<!-- Image Table -->
+            <details>
+                <summary>Image page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("image")).scroll);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('image')">Purge this</button>
+            </details>
+
+<!-- Form Table -->
+            <details>
+                <summary>Form page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("form")).scroll);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('form')">Purge this</button>
+            </details>
+
+<!-- Table and List Table -->
+            <details>
+                <summary>Table and List page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("tables")).scroll);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('tables')">Purge this</button>
+            </details>
+
+<!-- Externals Table -->
+            <details>
+                <summary>Externals page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("externals")).scroll);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('externals')">Purge this</button>
+            </details>
+
+<!-- Report Table -->
+            <details>
+                <summary>Report page</summary>
+              <table>
+                <caption>Static Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>User Agent</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).userAgent);</script></td>
+                </tr>
+                <tr>
+                    <td>User Language</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).userLanguage);</script></td>
+                </tr>
+                <tr>
+                    <td>Cookie is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).cookie);</script></td>
+                </tr>
+                <tr>
+                    <td>JavaScript is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).javascript);</script></td>
+                </tr><tr>
+                    <td>Screen Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).screenWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Screen Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).screenHeight);</script></td>
+                </tr><tr>
+                    <td>Window Width</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).windowWidth);</script></td>
+                </tr>
+                <tr>
+                    <td>Window Height</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).windowHeight);</script></td>
+                </tr><tr>
+                    <td>Connection Type</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).connectionType);</script></td>
+                </tr>
+                <tr>
+                    <td>Image is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).image);</script></td>
+                </tr><tr>
+                    <td>CSS is on</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).css);</script></td>
+                </tr>
+            </table>
+            <table>
+                <caption>Performance Data</caption>
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Value</th>
+                </tr>
+            </thead>
+                <tr>
+                    <td>Loading start time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).loadingStart);</script></td>
+                </tr>
+                <tr>
+                    <td>Loading end time</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).loadingEnd);</script></td>
+                </tr><tr>
+                    <td>Time Taken to load page</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).timeTaken);</script></td>
+                </tr>
+            </table>
+            <div id = "overflow_div">
+            <details>
+                <summary>Event Information</summary>
+            <table> 
+                <tr>
+                    <td>Click times</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).click);</script></td>
+                </tr>
+                <tr>
+                    <td>Mouse Movement</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).mouseMovement);</script></td>
+                </tr>
+                <tr>
+                    <td>Key Strokes</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).keyStroke);</script></td>
+                </tr>
+                <tr>
+                    <td>Scroll value</td>
+                  <td><script>document.writeln(JSON.parse(localStorage.getItem("report")).scroll);</script></td>
+                </tr>
+              </table>
+            </details>
+        </div>
+            <button type = "button" onclick="purgeThis('report')">Purge this</button>
+            </details>
+
+        
+            <br>
+            <br>
+            <button type = "button" onclick="purgeAll()">Purge All</button>
+            <script>function purgeAll(){
+                var purge = confirm("Are you sure you want to purge all the data?")
+                if (purge == true){
+                    localStorage.clear();
+                }
+            }</script>
+            <script>function purgeThis(key){
+                var purge = confirm("Are you sure you want to purge this data?")
+                if (purge == true){
+                    localStorage.removeItem(key);
+                }
+            }</script>
+        </div>
+    </body>
+</html>
