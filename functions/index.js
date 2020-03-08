@@ -53,12 +53,14 @@ exports.updateData = functions.https.onRequest((req, res) => {
         scroll : json.scroll,
         mouseMovement : json.mouseMovement,
         unloadTimes : json.unloadTimes,
-        id : json.id
+        id : json.id,
+        hour : json.hour
     });
     res.send("Success");
 });
 
 exports.updateAdminData = functions.https.onRequest((req, res) => {
+  res.setHeader('Access-Control-Expose-Headers', '*');
     res.setHeader('Access-Control-Allow-Origin', 'https://cse135-hw4-5666d.firebaseapp.com');
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Expose-Headers', '*');
@@ -81,18 +83,69 @@ exports.returnListOfAdmins = functions.https.onRequest((req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT');
     var db = admin.firestore();
     let adminRef = db.collection('Admins');
+    var admins = new listOfAdmins();
     let allAdmins = adminRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
-          var admins = new listOfAdmins();
-          admins.array.push(doc.data);
+          //console.log(doc.id, '=>', doc.data());
+          var admin = new Admin(doc.id, doc.data().Email, doc.data().verified);
+          admins.array.push(admin);
         });
+        res.send(JSON.stringify(admins));
       })
       .catch(err => {
         console.log('Error getting documents', err);
       });
-})
+});
+
+
+exports.returnCollectedStaticData = functions.https.onRequest((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://cse135-hw4-5666d.firebaseapp.com');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Expose-Headers', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT');
+  var db = admin.firestore();
+  let usersRef = db.collection('Users');
+  var users = new listOfUsers();
+  let allUsers = usersRef.get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        //console.log(doc.id, '=>', doc.data());
+        if(doc.data().userInfo == null) {
+          var user = new UserStatic(doc.data().userAgent, doc.data().userLanguage, doc.data().connectionType, doc.data().css, doc.data().cookie, doc.data().javascript);
+          users.array.push(user);
+        }
+      });
+      res.send(JSON.stringify(users));
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+});
+
+exports.returnCollectedSpeedData = functions.https.onRequest((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://cse135-hw4-5666d.firebaseapp.com');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Expose-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT');
+    var db = admin.firestore();
+    let usersRef = db.collection('Users');
+    var users = new listOfUsers();
+    let allUsers = usersRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          //console.log(doc.id, '=>', doc.data());
+          if(doc.data().userInfo == null) {
+            var speed = new DynamicData(doc.data().timeTaken);
+            users.array.push(speed);
+          }
+        });
+        res.send(JSON.stringify(users));
+      })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
+    });
 
 
 //A function to generate a random string id
@@ -109,6 +162,29 @@ function makeid(length) {
 
  function listOfAdmins() {
     this.array = []; 
+ }
+
+ function listOfUsers() {
+    this.array = []; 
+}
+
+ function Admin(name, email, verified) {
+    this.name = name;
+    this.email = email;
+    this.verified = verified;
+ }
+
+ function UserStatic(userAgent, userLanguage, connectionType, css, cookie, js) {
+    this.userAgent = userAgent;
+    this.userLanguage = userLanguage;
+    this.connectionType = connectionType;
+    this.css = css;
+    this.cookie = cookie;
+    this.js = js;
+ }
+
+ function DynamicData(loadTime) {
+   this.loadTime = loadTime;
  }
 
 

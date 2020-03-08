@@ -66,6 +66,9 @@ function Entry(){
         scriptFlag = true;
     }
 
+    var today = new Date();
+    var currentHour = today.getHours();
+
     var start = performance.timing.navigationStart;
     var end = performance.timing.responseEnd;
     var timeTakenValue = end - start;
@@ -90,6 +93,7 @@ function Entry(){
     this.mouseMovement = "";
     this.unloadTimes = 0;
     this.id = "";
+    this.hour = currentHour;
 }
 
 function storeData(pageName){

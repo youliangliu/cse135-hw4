@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+    <title>Browser Info</title>
+    <meta name="author" content="Youliang Liu">
+    <script src="/jquery/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
+    <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+</head>
+<body>
+    <nav>
+        <a href="/dashboard.html">Dashboard</a> |
+        <a href="/reports/speed.html">Speed Data</a> |
+        <a href="/logout.html">Logout</a>
+    </nav>
+    <p>Browser session info:</p>
+    <div id="grid" style="height: 450px"></div>
+    <script>
+        var userArray = [];
+        $('#grid').w2grid({
+            name: 'grid',
+            header: 'List of Names',
+            show: {
+                toolbar: true,
+                footer: true
+            },
+            columns: [
+                { field: 'recid', caption: 'ID', size: '50px', sortable: true, attr: 'align=center' },
+                { field: 'userAgent', caption: 'User Agent', size: '40%', sortable: true, resizable: true },
+                { field: 'userLang', caption: 'User Language', size: '10%', sortable: true, resizable: true },
+                { field: 'conType', caption: 'Connection Type', size: '10%', resizable: true },
+                { field: 'css', caption: 'CSS Enabled', size: '10%', resizable: true },
+                { field: 'cookie', caption: 'Cookie Enabled', size: '10%', resizable: true },
+                { field: 'js', caption: 'JS Enabled', size: '10%', resizable: true },
+            ],
+            searches: [
+                { field: 'userLang', caption: 'User Language', type: 'text' },
+                { field: 'conType', caption: 'Connection Type', type: 'text' },
+                { field: 'js', caption: 'JS Enabled', type: 'text' },
+            ],
+            sortData: [
+                { field: 'recid', direction: 'ASC' }
+            ],
+            records: [
+            ]
+        });
+        function requestStaticData(){
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedStaticData';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseObj = JSON.parse(this.response);
+                    userArray = responseObj.array;
+                    for (i = 0; i<userArray.length; i++) {
+                        w2ui['grid'].add({ recid: i+1, 
+                                           userAgent: userArray[i].userAgent, 
+                                           userLang: userArray[i].userLanguage, 
+                                           conType: userArray[i].connectionType,
+                                           css: userArray[i].css,
+                                           cookie: userArray[i].cookie,
+                                           js: userArray[i].js
+                                         });
+                    }
+                }
+            };
+            request.send('request');
+        }
+        requestStaticData();
+    </script>
+</body>

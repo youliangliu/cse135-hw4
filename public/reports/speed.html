@@ -5,8 +5,9 @@
     <script src="/jquery/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
-    <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
-    <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+    <script src="/chartist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
+  </head>
 </head>
 <body>
     <nav>
@@ -14,48 +15,40 @@
         <a href="/reports/browsers.html">Browser Data</a> |
         <a href="/logout.html">Logout</a>
     </nav>
-    <div id="grid" style="height: 450px"></div>
+    <div class="ct-chart ct-perfect-fourth"></div>
     <script>
-        $('#grid').w2grid({
-    name: 'grid',
-    header: 'List of Names',
-    show: {
-        toolbar: true,
-        footer: true
-    },
-    columns: [
-        { field: 'recid', caption: 'ID', size: '50px', sortable: true, attr: 'align=center' },
-        { field: 'lname', caption: 'Last Name', size: '30%', sortable: true, resizable: true },
-        { field: 'fname', caption: 'First Name', size: '30%', sortable: true, resizable: true },
-        { field: 'email', caption: 'Email', size: '40%', resizable: true },
-        { field: 'sdate', caption: 'Start Date', size: '120px', resizable: true },
-    ],
-    searches: [
-        { field: 'lname', caption: 'Last Name', type: 'text' },
-        { field: 'fname', caption: 'First Name', type: 'text' },
-        { field: 'email', caption: 'Email', type: 'text' },
-    ],
-    sortData: [{ field: 'recid', direction: 'ASC' }],
-    records: [
-        { recid: 1, fname: 'John', lname: 'doe', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 2, fname: 'Stuart', lname: 'Motzart', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 3, fname: 'Jin', lname: 'Franson', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 4, fname: 'Susan', lname: 'Ottie', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 5, fname: 'Kelly', lname: 'Silver', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 6, fname: 'Francis', lname: 'Gatos', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 7, fname: 'Mark', lname: 'Welldo', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 8, fname: 'Thomas', lname: 'Bahh', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 9, fname: 'Sergei', lname: 'Rachmaninov', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 20, fname: 'Jill', lname: 'Doe', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 21, fname: 'Frank', lname: 'Motzart', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 22, fname: 'Peter', lname: 'Franson', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 23, fname: 'Andrew', lname: 'Ottie', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 24, fname: 'Manny', lname: 'Silver', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 25, fname: 'Ben', lname: 'Gatos', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 26, fname: 'Doer', lname: 'Welldo', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 27, fname: 'Shashi', lname: 'bahh', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 28, fname: 'Av', lname: 'Rachmaninov', email: 'jdoe@gmail.com', sdate: '4/3/2012' }
-    ]
-});
+        var userArray;
+        function requestSpeedData(){
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedSpeedData';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseObj = JSON.parse(this.response);
+                    userArray = responseObj.array;
+                    numOfSessions = userArray.length;
+                }
+            };
+            request.send('request');
+        }
+        requestSpeedData();
+        var data = {
+            // A labels array that can contain any sort of values
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            // Our series array that contains series objects or in this case series data arrays
+            series: [
+                [5, 2, 4, 2, 0]
+            ]
+        };
+        var options = {
+            // Disable line smoothing
+            lineSmooth: false,
+            width: 1500,
+            height: 400
+        };
+        // Create a new line chart object where as first parameter we pass in a selector
+        // that is resolving to our chart container element. The Second parameter
+        // is the actual data object.
+        new Chartist.Line('.ct-chart', data, options);
     </script>
 </body>
