@@ -112,7 +112,7 @@ exports.returnCollectedStaticData = functions.https.onRequest((req, res) => {
       snapshot.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         if(doc.data().userInfo == null) {
-          var user = new UserStatic(doc.data().userAgent, doc.data().userLanguage, doc.data().connectionType, doc.data().css, doc.data().cookie, doc.data().javascript);
+          var user = new UserStatic(doc.data().userAgent, doc.data().userLanguage, doc.data().connectionType, doc.data().css, doc.data().cookie, doc.data().javascript, doc.data().hour);
           users.array.push(user);
         }
       });
@@ -174,13 +174,14 @@ function makeid(length) {
     this.verified = verified;
  }
 
- function UserStatic(userAgent, userLanguage, connectionType, css, cookie, js) {
+ function UserStatic(userAgent, userLanguage, connectionType, css, cookie, js, hour) {
     this.userAgent = userAgent;
     this.userLanguage = userLanguage;
     this.connectionType = connectionType;
     this.css = css;
     this.cookie = cookie;
     this.js = js;
+    this.hour = hour;
  }
 
  function DynamicData(loadTime) {
