@@ -98,6 +98,7 @@ function Entry(){
     this.unloadTimes = 0;
     this.id = "";
     this.hour = currentHour;
+    this.pageName = pageName;
 
     this.startPage = startPage;
     this.leavePage = "";
