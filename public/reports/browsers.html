@@ -18,12 +18,21 @@
     </nav>
     <p>Browser session info:</p>
     <div id="grid" style="height: 450px"></div>
-    <p>Percentage of sessions by operating system</p>
-    <div class='ct-chart ct-perfect-fourth'></div>
+    <div id="container" style="display: flex;">
+        <div id="left_pie" style="width: 50%;">
+            <p>Percentage of sessions by operating system</p>
+            <div class='ct-chart ct-perfect-fourth'></div>
+        </div>
+        <div id="right_pie" style="width: 50%;">
+            <p>Percentage of sessions by connection type</p>
+            <div class='ct-chart2 ct-perfect-fourth' style="width: 50%;"></div>
+        </div>
+    </div>
     <script>
         var userArray = [];
         var numWin = 0;
         var numMac = 0;
+        var fourg = 0;
         $('#grid').w2grid({
             name: 'grid',
             header: 'List of Names',
@@ -75,15 +84,22 @@
                         else if(userAgent.search("Macintosh") != -1) {
                             numMac++;
                         }
+                        var conType = userArray[i].connectionType;
+                        if(conType.search("4g") != -1) {
+                            fourg++;
+                        }
                     }
                     var data = {
                         labels: ['Windows', 'Mac'],
                         series: [numWin, numMac]
                     };
-
+                    var conData = {
+                        labels:['4g', ' '],
+                        series:[fourg, 0]
+                    };
                     var options = {
-                        width: 600,
-                        height: 600,
+                        width: 500,
+                        height: 500,
                         labelInterpolationFnc: function(value) {
                             return value[0]
                         }
@@ -104,6 +120,7 @@
                         }]
                     ];
                     new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+                    new Chartist.Pie('.ct-chart2', conData, options, responsiveOptions);
                 }
             };
             request.send('request');
