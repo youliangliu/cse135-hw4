@@ -48,6 +48,8 @@ function keyStroke(pageName, key){
 }
 
 function Entry(){
+
+    var startPage = new Date();
     var imageCollection = document.images;
     var imageFlag = false;
     if (imageCollection.length > 0){
@@ -96,6 +98,10 @@ function Entry(){
     this.unloadTimes = 0;
     this.id = "";
     this.hour = currentHour;
+
+    this.startPage = startPage;
+    this.leavePage = "";
+    this.timeSpend = "";
 }
 
 function storeData(pageName){
@@ -124,6 +130,11 @@ function unLoad(pageName){
     var data = localStorage.getItem(pageName);
     let json = JSON.parse(data);
     var temp = parseInt(json.unloadTimes) + parseInt("1");
+    var leavePage = new Date();
+    var startPage = new Date(json.startPage);
+    json.leavePage = leavePage;
+    json.timeSpend = (leavePage - startPage)/1000;
+    
     json.unloadTimes = temp;
     localStorage.setItem(pageName, JSON.stringify(json));
 }
