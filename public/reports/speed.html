@@ -36,8 +36,10 @@
     </div>
     <p>Page Loading time (in ms):</p>
     <div class="ct-chart" style="height:300px"></div>
-    <p>User's time spent on page (in seconds)</p>
+    <p>User's time spent on page (trend in seconds)</p>
     <div class="ct-chart2" style="height:300px"></div>
+    <p>User's total time spent on page (in seconds)</p>
+    <div class='ct-chart-bar ct-perfect-fourth'></div>
     <script>
         var userArray;
         function requestSpeedData(pageNum){
@@ -71,6 +73,34 @@
                             timeOnPageArray.push(timeArray[i]);
                         }
                     }
+                    var totalTimeOnSite = 0;
+                    var indexTime = 0;
+                    var imagesTime = 0;
+                    var formTime = 0;
+                    var tableTime = 0;
+                    var externalsTime = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(nameArray[i] == 'index') {
+                            indexTime = indexTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'image') {
+                            imagesTime = imagesTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'form') {
+                            formTime = formTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'tables') {
+                            tableTime = tableTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'externals') {
+                            externalsTime = externalsTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                    }
                     var data = {
                         // A labels array that can contain any sort of values
                         labels: labelArray,
@@ -83,6 +113,12 @@
                         // Our series array that contains series objects or in this case series data arrays
                         series: [timeOnPageArray]
                     };
+                    var timeOnPageData2 = {
+                        labels: ['index', 'images', 'forms', 'tables', 'externals'],
+                        series: [
+                            [indexTime, imagesTime, formTime, tableTime, externalsTime]
+                        ]
+                    }
                     var options = {
                         // Disable line smoothing
                         lineSmooth: false,
@@ -94,9 +130,11 @@
                     // is the actual data object.
                     new Chartist.Line('.ct-chart', data, options);
                     new Chartist.Line('.ct-chart2', timeOnPageData, options);
+                    new Chartist.Bar('.ct-chart-bar', timeOnPageData2, options);
                 }
             };
             request.send('request');
         }
+
     </script>
 </body>
