@@ -54,7 +54,9 @@ exports.updateData = functions.https.onRequest((req, res) => {
         mouseMovement : json.mouseMovement,
         unloadTimes : json.unloadTimes,
         id : json.id,
-        hour : json.hour
+        hour : json.hour,
+        pageName : json.pageName,
+        timeOnPage : json.timeSpend
     });
     res.send("Success");
 });
@@ -138,6 +140,10 @@ exports.returnCollectedSpeedData = functions.https.onRequest((req, res) => {
           if(doc.data().userInfo == null) {
             var speed = doc.data().timeTaken;
             users.array.push(speed);
+            var name = doc.data().pageName;
+            users.pageName.push(name);
+            var timeOnPage = doc.data().timeOnPage;
+            users.timeOnPage.push(timeOnPage);
           }
         });
         res.send(JSON.stringify(users));
@@ -166,6 +172,8 @@ function makeid(length) {
 
  function listOfUsers() {
     this.array = []; 
+    this.pageName = [];
+    this.timeOnPage = [];
 }
 
  function Admin(name, email, verified) {

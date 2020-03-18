@@ -15,11 +15,32 @@
         <a href="/reports/browsers.html">Browser Data</a> |
         <a href="/logout.html">Logout</a>
     </nav>
-    <p>All Page Loading time (in ms):</p>
-    <div class="ct-chart ct-perfect-fourth"></div>
+    <p>click on each button to show data display for each page here: </p>
+    <p>CORS may randomly block access to the remote endpoints which is stupid. If the charts do not appear after several seconds please clear your browser's cache and reload the page.</p>
+    <div id="container" style="display: flex;">
+        <div id="btn_1" style="width: 20%;">
+            <button id="index_data" type="button" onclick="requestSpeedData('index')">index</button>
+        </div>
+        <div id="btn_2" style="width: 20%;">
+            <button id="image_data" type="button"onclick="requestSpeedData('image')">images</button>
+        </div>
+        <div id="btn_3" style="width: 20%;">
+            <button id="form_data" type="button" onclick="requestSpeedData('form')">forms</button>
+        </div>
+        <div id="btn_4" style="width: 20%;">
+            <button id="table_data" type="button" onclick="requestSpeedData('tables')">tables and lists</button>
+        </div>
+        <div id="btn_5" style="width: 20%;">
+            <button id="externals_data" type="button" onclick="requestSpeedData('externals')">externals</button>
+        </div>
+    </div>
+    <p>Page Loading time (in ms):</p>
+    <div class="ct-chart" style="height:300px"></div>
+    <p>User's time spent on page (in seconds)</p>
+    <div class="ct-chart2" style="height:300px"></div>
     <script>
         var userArray;
-        function requestSpeedData(){
+        function requestSpeedData(pageNum){
             var request = new XMLHttpRequest();
             var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedSpeedData';
             request.open('POST', url, true);
@@ -27,32 +48,55 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var responseObj = JSON.parse(this.response);
                     userArray = responseObj.array;
-                    numOfSessions = userArray.length;
+                    var totalNumOfSessions = userArray.length;
+                    var nameArray = responseObj.pageName;
+                    var timeArray = responseObj.timeOnPage;
                     var labelArray = [];
-                    for (i = 0; i<numOfSessions; i++) {
-                        labelArray.push(i+1);
+                    var labelArray2 = [];
+                    var dataArray = [];
+                    var timeOnPageArray = [];
+                    var lastNum = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(pageNum == nameArray[i]) {
+                            labelArray.push(lastNum+1);
+                            lastNum++;
+                            dataArray.push(userArray[i]);
+                        }
+                    }
+                    var lastNum = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(pageNum == nameArray[i]) {
+                            labelArray2.push(lastNum+1);
+                            lastNum++;
+                            timeOnPageArray.push(timeArray[i]);
+                        }
                     }
                     var data = {
                         // A labels array that can contain any sort of values
                         labels: labelArray,
                         // Our series array that contains series objects or in this case series data arrays
-                        series: [userArray]
+                        series: [dataArray]
+                    };
+                    var timeOnPageData = {
+                        // A labels array that can contain any sort of values
+                        labels: labelArray2,
+                        // Our series array that contains series objects or in this case series data arrays
+                        series: [timeOnPageArray]
                     };
                     var options = {
                         // Disable line smoothing
                         lineSmooth: false,
                         width: 1500,
-                        height: 400
+                        height: 300
                     };
                     // Create a new line chart object where as first parameter we pass in a selector
                     // that is resolving to our chart container element. The Second parameter
                     // is the actual data object.
                     new Chartist.Line('.ct-chart', data, options);
+                    new Chartist.Line('.ct-chart2', timeOnPageData, options);
                 }
             };
             request.send('request');
         }
-        requestSpeedData();
-
     </script>
 </body>
