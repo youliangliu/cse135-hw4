@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+    <title>Browser Info</title>
+    <meta name="author" content="Youliang Liu">
+    <script src="/jquery/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
+    <script src="/chartist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
+</head>
+<body style="background-color:lightblue;">
+    <nav>
+        <a href="/dashboard.html">Dashboard</a> |
+        <a href="/reports/speed.html">Speed Data</a> |
+        <a href="/logout.html">Logout</a>
+    </nav>
+    <p>Browser session info:</p>
+    <div id="grid" style="height: 450px"></div>
+    <div id="container" style="display: flex;">
+        <div id="left_pie" style="width: 50%;">
+            <p>Percentage of sessions by operating system</p>
+            <div class='ct-chart ct-perfect-fourth'></div>
+        </div>
+        <div id="right_pie" style="width: 50%;">
+            <p>Percentage of sessions by connection type</p>
+            <div class='ct-chart2 ct-perfect-fourth' style="width: 50%;"></div>
+        </div>
+    </div>
+    <script>
+        var userArray = [];
+        var numWin = 0;
+        var numMac = 0;
+        var fourg = 0;
+        $('#grid').w2grid({
+            name: 'grid',
+            header: 'List of Names',
+            show: {
+                toolbar: true,
+                footer: true
+            },
+            columns: [
+                { field: 'recid', caption: 'ID', size: '50px', sortable: true, attr: 'align=center' },
+                { field: 'userAgent', caption: 'User Agent', size: '40%', sortable: true, resizable: true },
+                { field: 'userLang', caption: 'User Language', size: '10%', sortable: true, resizable: true },
+                { field: 'conType', caption: 'Connection Type', size: '10%', resizable: true },
+                { field: 'css', caption: 'CSS Enabled', size: '10%', resizable: true },
+                { field: 'cookie', caption: 'Cookie Enabled', size: '10%', resizable: true },
+                { field: 'js', caption: 'JS Enabled', size: '10%', resizable: true },
+            ],
+            searches: [
+                { field: 'userLang', caption: 'User Language', type: 'text' },
+                { field: 'conType', caption: 'Connection Type', type: 'text' },
+                { field: 'js', caption: 'JS Enabled', type: 'text' },
+            ],
+            sortData: [
+                { field: 'recid', direction: 'ASC' }
+            ],
+            records: [
+            ]
+        });
+        function requestStaticData(){
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedStaticData';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseObj = JSON.parse(this.response);
+                    userArray = responseObj.array;
+                    for (i = 0; i<userArray.length; i++) {
+                        w2ui['grid'].add({ recid: i+1, 
+                                           userAgent: userArray[i].userAgent, 
+                                           userLang: userArray[i].userLanguage, 
+                                           conType: userArray[i].connectionType,
+                                           css: userArray[i].css,
+                                           cookie: userArray[i].cookie,
+                                           js: userArray[i].js
+                                         });
+                        var userAgent = userArray[i].userAgent;
+                        if(userAgent.search("Windows") != -1) {
+                            numWin++;
+                        }
+                        else if(userAgent.search("Macintosh") != -1) {
+                            numMac++;
+                        }
+                        var conType = userArray[i].connectionType;
+                        if(conType.search("4g") != -1) {
+                            fourg++;
+                        }
+                    }
+                    var data = {
+                        labels: ['Windows', 'Mac'],
+                        series: [numWin, numMac]
+                    };
+                    var conData = {
+                        labels:['4g', ' '],
+                        series:[fourg, 0]
+                    };
+                    var options = {
+                        width: 500,
+                        height: 500,
+                        labelInterpolationFnc: function(value) {
+                            return value[0]
+                        }
+                    };
+
+                    var responsiveOptions = [
+                        ['screen and (min-width: 640px)', {
+                            chartPadding: 30,
+                            labelOffset: 100,
+                            labelDirection: 'explode',
+                            labelInterpolationFnc: function(value) {
+                            return value;
+                            }
+                        }],
+                        ['screen and (min-width: 1024px)', {
+                            labelOffset: 80,
+                            chartPadding: 20
+                        }]
+                    ];
+                    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+                    new Chartist.Pie('.ct-chart2', conData, options, responsiveOptions);
+                }
+            };
+            request.send('request');
+        }
+        requestStaticData();
+    </script>
+</body>

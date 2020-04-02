@@ -5,7 +5,7 @@ firebase.initializeApp({
     authDomain: 'cse135-hw4-5666d.firebaseapp.com',  
     projectId: 'cse135-hw4-5666d'
 });
-document.getElementById("loginButton").onclick = function() {
+document.getElementById("loginBtn").onclick = function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
     firebase.auth().getRedirectResult().then(function(result) {
@@ -27,9 +27,16 @@ firebase.auth().onAuthStateChanged(user => {
     var name = user.displayName;
     var email = user.email;
     var verified = user.emailVerified;
-    
-    sendAdminData(name, email, verified);
-    window.location = './dashboard.html'; //After successful login, user will be redirected to home.html
+    if(email == 'xil536@ucsd.edu' || email == 'liuyouliang120@gmail.com' || email == 'cse135grader@gmail.com') {
+      sendAdminData(name, email, verified);
+      window.location = './dashboard.html'; //After successful login, user will be redirected to home.html
+    }
+    else {
+      confirm("You are not authroized to view the database");
+      window.location = './logout.html'; //After successful login, user will be redirected to home.html
+    }
+    //sendAdminData(name, email, verified);
+    //window.location = './dashboard.html'; //After successful login, user will be redirected to home.html
   }
 });
 

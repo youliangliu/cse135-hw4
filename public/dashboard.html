@@ -7,49 +7,122 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
     <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
     <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+    <script src="/chartist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
 </head>
-<body>
+<body style="background-color:lightblue;">
     <nav>
         <a href="/reports/speed.html">Speed Data</a> |
         <a href="/reports/browsers.html">Browser Data</a> |
         <a href="./logout.html">Logout</a>
     </nav>
+    <p>List of People who accessed the site</p>
     <div id="grid" style="height: 450px"></div>
     <script>
+        var adminArray = [];
         $('#grid').w2grid({
-    name: 'grid',
-    header: 'List of Names',
-    show: {
-        toolbar: true,
-        footer: true
-    },
-    columns: [
-        { field: 'name', caption: 'Name', size: '40%', sortable: true, resizable: true },
-        { field: 'email', caption: 'Email', size: '40%', resizable: true },
-        { field: 'verified', caption: 'Verified', size: '20%', resizable: true },
-    ],
-    searches: [
-        { field: 'name', caption: 'Name', type: 'text' },
-    ],
-    sortData: [{ field: 'name', direction: 'ASC' }],
-    records: [
-        { recid: 1, name: 'John', email: 'jdoe@gmail.com', verified: 'y' },
-    ]
-});
-    </script>
-    <script>
+            name: 'grid',
+            header: 'List of People who accessed the site',
+            show: {
+                toolbar: true,
+                footer: true
+            },
+            columns: [
+                { field: 'name', caption: 'Name', size: '40%', sortable: true, resizable: true },
+                { field: 'email', caption: 'Email', size: '40%', resizable: true },
+                { field: 'verified', caption: 'Verified', size: '20%', resizable: true },
+            ],
+            searches: [
+                { field: 'name', caption: 'Name', type: 'text' },
+            ],
+            sortData: [
+                { field: 'name', direction: 'ASC' }
+            ],
+            records: []
+        })
         function requestAdmins(){
-            //var data = localStorage.getItem(pageName);
             var request = new XMLHttpRequest();
             var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnListOfAdmins';
             request.open('POST', url, true);
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    //When response is ready grab the id in response
+                    var responseObj = JSON.parse(this.response);
+                    adminArray = responseObj.array;
+                    for (i = 0; i<adminArray.length; i++) {
+                        w2ui['grid'].add({ recid: i+1, name: adminArray[i].name, email: adminArray[i].email, verified: adminArray[i].verified });
+                    }
                 }
             };
             request.send('request');
         }
         requestAdmins();
     </script>
+    <p>Website Usage time</p>
+    <div class='ct-chart ct-perfect-fourth'></div>
 </body>
+<script>
+    function requestHourData(){
+    var request = new XMLHttpRequest();
+    var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedStaticData';
+    request.open('POST', url, true);
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var responseObj = JSON.parse(this.response);
+            userArray = responseObj.array;
+
+            var midnight_22_4 = 0;
+            var morning_4_10 = 0;
+            var afternoon_10_16 = 0;
+            var night_16_22 = 0;
+
+            for (i = 0; i<userArray.length; i++) {
+                if(userArray[i].hour>=22 || userArray[i].hour < 4){
+                    midnight_22_4++;
+                }
+                else if(userArray[i].hour>=4 && userArray[i].hour < 10){
+                    morning_4_10++;
+                }
+                else if(userArray[i].hour>=10 && userArray[i].hour < 16){
+                    afternoon_10_16++;
+                }
+                else if(userArray[i].hour>=16 && userArray[i].hour < 22){
+                    night_16_22++;
+                }
+            }
+
+            var data = {
+            labels: ['Midnight Users: 22:00 - 04:00', 'Morning Users: 04:00 - 10:00', 'Afternoon Users: 10:00 - 16:00', 'Night Users: 16:00 - 22:00'],
+            series: [midnight_22_4, morning_4_10, afternoon_10_16, night_16_22]
+            };
+
+            var options = {
+                width: 600,
+                height: 600,
+                labelInterpolationFnc: function(value) {
+                    return value[0]
+                }
+            };
+
+            var responsiveOptions = [
+            ['screen and (min-width: 640px)', {
+                chartPadding: 30,
+                labelOffset: 100,
+                labelDirection: 'explode',
+                labelInterpolationFnc: function(value) {
+                return value;
+                }
+            }],
+            ['screen and (min-width: 1024px)', {
+                labelOffset: 80,
+                chartPadding: 20
+            }]
+            ];
+
+            new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+
+        }
+    };
+    request.send('request');
+}
+requestHourData();
+</script>

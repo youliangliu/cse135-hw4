@@ -5,57 +5,136 @@
     <script src="/jquery/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
-    <script src="/w2ui-1.5.rc1/w2ui-1.5.rc1.js"></script>
-    <link rel="stylesheet" href="/w2ui-1.5.rc1/w2ui-1.5.rc1.css">
+    <script src="/chartist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/chartist/chartist.min.css">
+  </head>
 </head>
-<body>
+<body style="background-color:lightblue;">
     <nav>
         <a href="/dashboard.html">Dashboard</a> |
         <a href="/reports/browsers.html">Browser Data</a> |
         <a href="/logout.html">Logout</a>
     </nav>
-    <div id="grid" style="height: 450px"></div>
+    <p>click on each button to show data display for each page here: </p>
+    <p>CORS may randomly block access to the remote endpoints which is stupid. If the charts do not appear after several seconds please clear your browser's cache and reload the page.</p>
+    <div id="container" style="display: flex;">
+        <div id="btn_1" style="width: 20%;">
+            <button id="index_data" type="button" onclick="requestSpeedData('index')">index</button>
+        </div>
+        <div id="btn_2" style="width: 20%;">
+            <button id="image_data" type="button"onclick="requestSpeedData('image')">images</button>
+        </div>
+        <div id="btn_3" style="width: 20%;">
+            <button id="form_data" type="button" onclick="requestSpeedData('form')">forms</button>
+        </div>
+        <div id="btn_4" style="width: 20%;">
+            <button id="table_data" type="button" onclick="requestSpeedData('tables')">tables and lists</button>
+        </div>
+        <div id="btn_5" style="width: 20%;">
+            <button id="externals_data" type="button" onclick="requestSpeedData('externals')">externals</button>
+        </div>
+    </div>
+    <p>Page Loading time (in ms):</p>
+    <div class="ct-chart" style="height:300px"></div>
+    <p>User's time spent on page (trend in seconds)</p>
+    <div class="ct-chart2" style="height:300px"></div>
+    <p>User's total time spent on page (in seconds)</p>
+    <div class='ct-chart-bar ct-perfect-fourth'></div>
     <script>
-        $('#grid').w2grid({
-    name: 'grid',
-    header: 'List of Names',
-    show: {
-        toolbar: true,
-        footer: true
-    },
-    columns: [
-        { field: 'recid', caption: 'ID', size: '50px', sortable: true, attr: 'align=center' },
-        { field: 'lname', caption: 'Last Name', size: '30%', sortable: true, resizable: true },
-        { field: 'fname', caption: 'First Name', size: '30%', sortable: true, resizable: true },
-        { field: 'email', caption: 'Email', size: '40%', resizable: true },
-        { field: 'sdate', caption: 'Start Date', size: '120px', resizable: true },
-    ],
-    searches: [
-        { field: 'lname', caption: 'Last Name', type: 'text' },
-        { field: 'fname', caption: 'First Name', type: 'text' },
-        { field: 'email', caption: 'Email', type: 'text' },
-    ],
-    sortData: [{ field: 'recid', direction: 'ASC' }],
-    records: [
-        { recid: 1, fname: 'John', lname: 'doe', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 2, fname: 'Stuart', lname: 'Motzart', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 3, fname: 'Jin', lname: 'Franson', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 4, fname: 'Susan', lname: 'Ottie', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 5, fname: 'Kelly', lname: 'Silver', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 6, fname: 'Francis', lname: 'Gatos', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 7, fname: 'Mark', lname: 'Welldo', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 8, fname: 'Thomas', lname: 'Bahh', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 9, fname: 'Sergei', lname: 'Rachmaninov', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 20, fname: 'Jill', lname: 'Doe', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 21, fname: 'Frank', lname: 'Motzart', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 22, fname: 'Peter', lname: 'Franson', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 23, fname: 'Andrew', lname: 'Ottie', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 24, fname: 'Manny', lname: 'Silver', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 25, fname: 'Ben', lname: 'Gatos', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 26, fname: 'Doer', lname: 'Welldo', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 27, fname: 'Shashi', lname: 'bahh', email: 'jdoe@gmail.com', sdate: '4/3/2012' },
-        { recid: 28, fname: 'Av', lname: 'Rachmaninov', email: 'jdoe@gmail.com', sdate: '4/3/2012' }
-    ]
-});
+        var userArray;
+        function requestSpeedData(pageNum){
+            var request = new XMLHttpRequest();
+            var url = 'https://us-central1-cse135-hw4-5666d.cloudfunctions.net/returnCollectedSpeedData';
+            request.open('POST', url, true);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseObj = JSON.parse(this.response);
+                    userArray = responseObj.array;
+                    var totalNumOfSessions = userArray.length;
+                    var nameArray = responseObj.pageName;
+                    var timeArray = responseObj.timeOnPage;
+                    var labelArray = [];
+                    var labelArray2 = [];
+                    var dataArray = [];
+                    var timeOnPageArray = [];
+                    var lastNum = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(pageNum == nameArray[i]) {
+                            labelArray.push(lastNum+1);
+                            lastNum++;
+                            dataArray.push(userArray[i]);
+                        }
+                    }
+                    var lastNum = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(pageNum == nameArray[i]) {
+                            labelArray2.push(lastNum+1);
+                            lastNum++;
+                            timeOnPageArray.push(timeArray[i]);
+                        }
+                    }
+                    var totalTimeOnSite = 0;
+                    var indexTime = 0;
+                    var imagesTime = 0;
+                    var formTime = 0;
+                    var tableTime = 0;
+                    var externalsTime = 0;
+                    for (i = 0; i<totalNumOfSessions; i++) {
+                        if(nameArray[i] == 'index') {
+                            indexTime = indexTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'image') {
+                            imagesTime = imagesTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'form') {
+                            formTime = formTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'tables') {
+                            tableTime = tableTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                        else if(nameArray[i] == 'externals') {
+                            externalsTime = externalsTime + timeArray[i];
+                            totalTimeOnSite = totalTimeOnSite + timeArray[i];
+                        }
+                    }
+                    var data = {
+                        // A labels array that can contain any sort of values
+                        labels: labelArray,
+                        // Our series array that contains series objects or in this case series data arrays
+                        series: [dataArray]
+                    };
+                    var timeOnPageData = {
+                        // A labels array that can contain any sort of values
+                        labels: labelArray2,
+                        // Our series array that contains series objects or in this case series data arrays
+                        series: [timeOnPageArray]
+                    };
+                    var timeOnPageData2 = {
+                        labels: ['index', 'images', 'forms', 'tables', 'externals'],
+                        series: [
+                            [indexTime, imagesTime, formTime, tableTime, externalsTime]
+                        ]
+                    }
+                    var options = {
+                        // Disable line smoothing
+                        lineSmooth: false,
+                        width: 1500,
+                        height: 300
+                    };
+                    // Create a new line chart object where as first parameter we pass in a selector
+                    // that is resolving to our chart container element. The Second parameter
+                    // is the actual data object.
+                    new Chartist.Line('.ct-chart', data, options);
+                    new Chartist.Line('.ct-chart2', timeOnPageData, options);
+                    new Chartist.Bar('.ct-chart-bar', timeOnPageData2, options);
+                }
+            };
+            request.send('request');
+        }
+
     </script>
 </body>
